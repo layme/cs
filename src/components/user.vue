@@ -20,7 +20,7 @@
     <hr/>
 
     <el-table stripe
-              :data="userData"
+              :data="userData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
               style="width: 100%"
               height="485" size="mini">
       <el-table-column
@@ -68,8 +68,10 @@
 
     <el-pagination style="text-align: right"
                    @current-change="handleCurrentChange"
+                   :page-size="pageSize"
+                   :current-page="currentPage"
                    layout="prev, pager, next, total"
-                   :total="total">
+                   :total="userData.length">
     </el-pagination>
 
     <el-dialog title="新增用户" :visible.sync="addFormVisible">
@@ -168,13 +170,46 @@
         addFormVisible: false,
         editFormVisible: false,
 
-        total: 0,
+        pageSize: 10,
+        currentPage: 1,
 
         uid: '',
 
         value3: '',
 
-        userData: [],
+        userData: [{
+          uid: '1002',
+          name: 'tom',
+          sex: '男',
+          age: '19',
+          phone: '19901234567',
+          role: 'admin',
+          regTime: '20180409'
+        },{
+          uid: '1003',
+          name: 'tom',
+          sex: '男',
+          age: '19',
+          phone: '19901234567',
+          role: 'admin',
+          regTime: '20180409'
+        },{
+          uid: '1004',
+          name: 'tom',
+          sex: '男',
+          age: '19',
+          phone: '19901234567',
+          role: 'admin',
+          regTime: '20180409'
+        },{
+          uid: '1005',
+          name: 'tom',
+          sex: '男',
+          age: '19',
+          phone: '19901234567',
+          role: 'admin',
+          regTime: '20180409'
+        }],
 
         userVO: {
           uId: '',
@@ -304,7 +339,8 @@
       },
 
 
-      handleCurrentChange(val) {
+      handleCurrentChange(currentPage) {
+          this.currentPage = currentPage;
         console.log(`当前页: ${val}`);
       },
 

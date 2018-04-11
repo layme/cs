@@ -46,12 +46,20 @@
     </el-dialog>
 
     <el-dialog title="所有商品类别" :visible.sync="dialogCheckGoodsType">
-      <el-table :data="allGoodsTypeData" loading="loading2" element-loading-text="拼命加载中..." height="250">
+      <el-table :data="allGoodsTypeData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+                loading="loading2" element-loading-text="拼命加载中..." height="250">
         <el-table-column property="tid" label="类别编号"></el-table-column>
         <el-table-column property="name" label="类别名称"></el-table-column>
         <el-table-column property="uid" label="创建人编号"></el-table-column>
         <el-table-column property="regTime" label="创建时间"></el-table-column>
       </el-table>
+      <el-pagination style="text-align: right"
+                     @current-change="handleCurrentChange"
+                     :page-size="pageSize"
+                     :current-page="currentPage"
+                     layout="prev, pager, next, total"
+                     :total="allGoodsTypeData.length">
+      </el-pagination>
     </el-dialog>
   </div>
 </template>
@@ -64,6 +72,9 @@
         loading2: false,
         dialogAddGoodsType: false,
         dialogCheckGoodsType: false,
+
+        pageSize: 5,
+        currentPage: 1,
 
         typeName: '',
 

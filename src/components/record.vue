@@ -23,7 +23,7 @@
     </el-form>
     <hr/>
     <el-table stripe v-loading="loading" element-loading-text="拼命加载中"
-              :data="stockData"
+              :data="recordData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
               style="width: 100%"
               height="500" size="mini">
       <el-table-column
@@ -52,8 +52,11 @@
       </el-table-column>
     </el-table>
     <el-pagination style="text-align: right"
+                   @current-change="handleCurrentChange"
+                   :page-size="pageSize"
+                   :current-page="currentPage"
                    layout="prev, pager, next, total"
-                   :total="total">
+                   :total="recordData.length">
     </el-pagination>
   </div>
 </template>
@@ -63,14 +66,15 @@
     data() {
       return {
         loading: false,
-        total: 0,
+        pageSize: 10,
+        currentPage: 1,
 
         stockDto: {
           gid: '',
           checkDate: ''
         },
 
-        stockData: []
+        recordData: []
       }
     },
     methods: {
@@ -83,7 +87,7 @@
         }, timeout: 3000})
           .then(response => {
             console.log(response);
-            this.stockData = response.data.data;
+            this.recordData = response.data.data;
             this.loading = false;
             if (response.data.result == false) {
               this.errorNotice(response.data.message);
