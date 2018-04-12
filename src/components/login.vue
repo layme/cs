@@ -30,7 +30,7 @@
               <el-input class="mb" placeholder="请在此输入账号" suffix-icon="el-icon" v-model="login.uid"/>
             </div>
             <div class="demo-input-suffix">
-              <el-input type="password" class="mb" placeholder="请在此输入密码" suffix-icon="el-icon" v-model="login.password"/>
+              <el-input type="password" class="mb" placeholder="请在此输入密码" suffix-icon="el-icon" v-model="login.password" @keyup.enter="onSubmit"/>
             </div>
 
             <el-button class="mb" type="primary" @click="onSubmit">登 录</el-button>

@@ -177,39 +177,7 @@
 
         value3: '',
 
-        userData: [{
-          uid: '1002',
-          name: 'tom',
-          sex: '男',
-          age: '19',
-          phone: '19901234567',
-          role: 'admin',
-          regTime: '20180409'
-        },{
-          uid: '1003',
-          name: 'tom',
-          sex: '男',
-          age: '19',
-          phone: '19901234567',
-          role: 'admin',
-          regTime: '20180409'
-        },{
-          uid: '1004',
-          name: 'tom',
-          sex: '男',
-          age: '19',
-          phone: '19901234567',
-          role: 'admin',
-          regTime: '20180409'
-        },{
-          uid: '1005',
-          name: 'tom',
-          sex: '男',
-          age: '19',
-          phone: '19901234567',
-          role: 'admin',
-          regTime: '20180409'
-        }],
+        userData: [],
 
         userVO: {
           uId: '',
@@ -235,7 +203,9 @@
     methods: {
       search() {
         this.loading = true;
-        this.$http.get('http://localhost:8088/api/user/search', {params: {uid: this.uid}, timeout: 3000})
+        this.$http.get('http://localhost:8088/api/user/search',
+          {params: {uid: this.uid,pageSize: this.pageSize,currentPage: this.currentPage},
+          timeout: 3000})
           .then(response => {
             console.log(response);
             this.userData = response.data.data;
