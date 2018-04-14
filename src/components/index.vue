@@ -11,9 +11,9 @@
           <div class="name">杂货店库存管理系统</div>
         </el-col>
         <el-col :span="2">
-          <div class="setting">
+          <div class="user">
             <el-dropdown @command="handleCommand">
-              <i class="el-icon-setting" style="margin-right: 5px; color: #fff;"> 设 置</i>
+              <i class="el-icon-star-on" style="margin-right: 5px; color: #fff;"> 你好，{{ name }}</i>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="0" disabled>修改资料</el-dropdown-item>
                 <el-dropdown-item command="1" disabled>修改密码</el-dropdown-item>
@@ -28,12 +28,8 @@
       <el-aside width="160px">
         <el-menu router="true"
                  class="el-menu-vertical-demo">
-          <el-menu-item index="/stock"><i class="el-icon-search"> 库存查询</i></el-menu-item>
-          <el-menu-item index="/input"><i class="el-icon-download"> 商品入库</i></el-menu-item>
-          <el-menu-item index="/output"><i class="el-icon-upload2"> 商品出库</i></el-menu-item>
-          <el-menu-item index="/registry"><i class="el-icon-edit-outline"> 商品注册</i></el-menu-item>
-          <el-menu-item index="/record"><i class="el-icon-tickets"> 出入记录</i></el-menu-item>
-          <el-menu-item index="/user"><i class="el-icon-menu"> 用户管理</i></el-menu-item>
+          <el-menu-item v-for="authority in authorityList" :key="authority.id" :index="authority.path"><i :class="authority.icon"> {{authority.name}}</i></el-menu-item>
+
 
         </el-menu>
       </el-aside>
@@ -48,6 +44,89 @@
     </el-footer>
   </el-container>
 </template>
+
+<script>
+  export default {
+    data() {
+      return {
+        name: '',
+        authorityList: []
+      }
+    },
+
+    created: function () {
+      this.getAuthorityList();
+      this.getCurrentUserName();
+    },
+
+    methods: {
+      getAuthorityList() {
+        this.$http.get('http://localhost:8088/api/authority/findAllByRole',
+          {timeout: 3000})
+          .then(response => {
+            console.log(response);
+            if (response.data.result == true) {
+              this.authorityList = response.data.data;
+            } else {
+              this.errorNotice(response.data.message);
+            }
+          })
+          .catch(error => {
+            this.loading = false;
+            this.errorNotice("无法连接到服务器");
+          });
+      },
+
+      getCurrentUserName() {
+        this.$http.get('http://localhost:8088/api/user/getCurrentUser',
+          {timeout: 3000})
+          .then(response => {
+            console.log(response);
+            if (response.data.result == true) {
+              this.name = response.data.data.name;
+            } else {
+              this.errorNotice(response.data.message);
+            }
+          })
+          .catch(error => {
+            this.loading = false;
+            this.errorNotice("无法连接到服务器");
+          });
+      },
+
+      handleCommand(command) {
+        if (command == 2) {
+          this.isTrue();
+        }
+      },
+
+      isTrue() {
+        this.$confirm('确定退出系统?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.logout();
+        }).catch(() => {
+
+        });
+      },
+
+      logout() {
+        this.$http.get('http://localhost:8088/api/system/logout', {timeout: 3000});
+        this.$router.push({name: 'login'});
+      },
+
+      errorNotice(val) {
+        this.$notify.error({
+          title: '错误',
+          message: val,
+          duration: 0
+        });
+      }
+    }
+  }
+</script>
 
 <style scoped>
   .el-header {
@@ -85,39 +164,10 @@
     top: 8px;
   }
 
-  .setting {
+  .user {
     position: relative;
     top: 8px;
     text-align: end;
 
   }
 </style>
-
-<script>
-  export default {
-    methods: {
-      handleCommand(command) {
-        if (command == 2) {
-          this.isTrue();
-        }
-      },
-
-      isTrue() {
-        this.$confirm('确定退出系统?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.logout();
-        }).catch(() => {
-
-        });
-      },
-
-      logout() {
-        this.$http.get('http://localhost:8088/api/system/logout', {timeout: 3000});
-        this.$router.push({name: 'login'});
-      }
-    }
-  }
-</script>

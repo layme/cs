@@ -87,9 +87,10 @@
         }, timeout: 3000})
           .then(response => {
             console.log(response);
-            this.recordData = response.data.data;
             this.loading = false;
-            if (response.data.result == false) {
+            if (response.data.result == true) {
+              this.recordData = response.data.data;
+            } else {
               this.errorNotice(response.data.message);
             }
           })

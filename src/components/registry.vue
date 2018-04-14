@@ -99,7 +99,7 @@
             console.log(response);
             this.loading = false;
             if (response.data.result == true) {
-              this.message("保存成功", "success");
+              this.message("保存成功，请记下商品编号", "success");
             } else {
               this.errorNotice(response.data.message);
             }
@@ -117,9 +117,10 @@
         this.$http.get('http://localhost:8088/api/goodstype/search', {timeout: 3000})
           .then(response => {
             console.log(response);
-            this.allGoodsTypeData = response.data.data;
             this.loading2 = false;
-            if (response.data.result == false) {
+            if (response.data.result == true) {
+              this.allGoodsTypeData = response.data.data;
+            } else {
               this.errorNotice(response.data.message);
             }
           })
@@ -134,8 +135,10 @@
         this.$http.get('http://localhost:8088/api/goodstype/search', {timeout: 3000})
           .then(response => {
             console.log(response);
-            this.options = response.data.data;
-            if (response.data.result == false) {
+
+            if (response.data.result == true) {
+              this.options = response.data.data;
+            } else {
               this.errorNotice(response.data.message);
             }
           })

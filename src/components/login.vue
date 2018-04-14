@@ -73,7 +73,6 @@
     },
     methods: {
       onSubmit() {
-        console.log(this.login);
         this.$http.get('http://localhost:8088/api/system/login', {params: {uid: this.login.uid, password: this.login.password}, timeout: 3000})
           .then(response => {
             this.result = response.data.result;

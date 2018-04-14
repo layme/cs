@@ -204,13 +204,14 @@
       search() {
         this.loading = true;
         this.$http.get('http://localhost:8088/api/user/search',
-          {params: {uid: this.uid,pageSize: this.pageSize,currentPage: this.currentPage},
+          {params: {uId: this.uid,pageSize: this.pageSize,currentPage: this.currentPage},
           timeout: 3000})
           .then(response => {
             console.log(response);
-            this.userData = response.data.data;
             this.loading = false;
-            if (response.data.result == false) {
+            if (response.data.result == true) {
+              this.userData = response.data.data;
+            } else {
               this.errorNotice(response.data.message);
             }
           })
@@ -237,7 +238,7 @@
             this.loading = false;
             if (response.data.result == true) {
               this.userVO.uId = response.data.data.uid;
-              this.message("保存成功", "success");
+              this.message("保存成功，请记下用户编号", "success");
             } else {
               this.errorNotice(response.data.message);
             }
@@ -291,7 +292,7 @@
 
       deleteClick(row) {
         this.loading = true;
-        this.$http.get('http://localhost:8088/api/user/delete', {params: {uid: row.uid}, timeout: 3000})
+        this.$http.get('http://localhost:8088/api/user/delete', {params: {uId: row.uid}, timeout: 3000})
           .then(response => {
             console.log(response);
             this.loading = false;
