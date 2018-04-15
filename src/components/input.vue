@@ -5,7 +5,7 @@
       <el-form-item label="商品ID" prop="gid">
         <el-input v-model="goodsInputDto.gid" placeholder="请在此输入商品编号" aria-required="true" clearable></el-input>
       </el-form-item>
-      <el-form-item label="出库数量" prop="number">
+      <el-form-item label="入库数量" prop="number">
         <el-input v-model.number="goodsInputDto.number" placeholder="请在此输入入库数量" clearable></el-input>
       </el-form-item>
       <el-form-item label="备注信息" prop="remark">
@@ -32,9 +32,9 @@
 
         rules: {
           gid: [{required: true, message: '请输入商品编号', trigger: 'blur'}],
-          number: [{required: true, message: '出库数量不能为空', trigger: 'blur'},
-            {type: 'number', message: '出库数量必须为数字值', trigger: 'blur'}],
-          remark: [{required: true, message: '请输备注信息', trigger: 'blur'}]
+          number: [{required: true, message: '入库数量不能为空', trigger: 'blur'},
+            {type: 'number', message: '入库数量必须为数字值', trigger: 'blur'}],
+          remark: [{required: true, message: '请输入备注信息', trigger: 'blur'}]
         }
       };
     },

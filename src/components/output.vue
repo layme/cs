@@ -34,7 +34,7 @@
           gid: [{required: true, message: '请输入商品编号', trigger: 'blur'}],
           number: [{required: true, message: '出库数量不能为空', trigger: 'blur'},
             {type: 'number', message: '出库数量必须为数字值', trigger: 'blur'}],
-          remark: [{required: true, message: '请输备注信息', trigger: 'blur'}]
+          remark: [{required: true, message: '请输入备注信息', trigger: 'blur'}]
         }
       };
     },
