@@ -13,7 +13,8 @@
         </el-form>
       </el-col>
       <el-col :span="3">
-        <el-button type="success" round icon="el-icon-circle-plus" @click="addFormVisible = true">新增用户</el-button>
+        <el-button type="success" round icon="el-icon-circle-plus" @click="addFormVisible = true">新增用户
+        </el-button>
       </el-col>
     </el-row>
 
@@ -82,19 +83,21 @@
         <el-form-item label="姓名" prop="name">
           <el-input v-model="userVO.name" placeholder="姓名" clearable></el-input>
         </el-form-item>
-        <el-col :span="12">
-          <el-form-item label="性别" prop="sex">
-            <el-radio-group v-model="userVO.sex">
-              <el-radio label="男"></el-radio>
-              <el-radio label="女"></el-radio>
-            </el-radio-group>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="年龄" prop="age">
-            <el-input v-model="userVO.age" placeholder="年龄" clearable></el-input>
-          </el-form-item>
-        </el-col>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="性别" prop="sex">
+              <el-radio-group v-model="userVO.sex">
+                <el-radio label="男"></el-radio>
+                <el-radio label="女"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="年龄" prop="age">
+              <el-input v-model="userVO.age" placeholder="年龄" clearable></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="userVO.phone" placeholder="手机号" clearable></el-input>
         </el-form-item>
@@ -126,19 +129,21 @@
         <el-form-item label="姓名" prop="name">
           <el-input v-model="userVO.name" placeholder="姓名" clearable></el-input>
         </el-form-item>
-        <el-col :span="12">
-          <el-form-item label="性别" prop="sex">
-            <el-radio-group v-model="userVO.sex">
-              <el-radio label="男"></el-radio>
-              <el-radio label="女"></el-radio>
-            </el-radio-group>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="年龄" prop="age">
-            <el-input v-model="userVO.age" placeholder="年龄" clearable></el-input>
-          </el-form-item>
-        </el-col>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="性别" prop="sex">
+              <el-radio-group v-model="userVO.sex">
+                <el-radio label="男"></el-radio>
+                <el-radio label="女"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="年龄" prop="age">
+              <el-input v-model="userVO.age" placeholder="年龄" clearable></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="userVO.phone" placeholder="手机号" clearable></el-input>
         </el-form-item>
@@ -163,7 +168,10 @@
 
 <script>
 
+  import ElRow from "element-ui/packages/row/src/row";
+
   export default {
+    components: {ElRow},
     data() {
       return {
         loading: false,
@@ -204,8 +212,10 @@
       search() {
         this.loading = true;
         this.$http.get('http://localhost:8088/api/user/search',
-          {params: {uId: this.uid,pageSize: this.pageSize,currentPage: this.currentPage},
-          timeout: 3000})
+          {
+            params: {uId: this.uid, pageSize: this.pageSize, currentPage: this.currentPage},
+            timeout: 3000
+          })
           .then(response => {
             console.log(response);
             this.loading = false;
@@ -309,9 +319,8 @@
           });
       },
 
-
       handleCurrentChange(currentPage) {
-          this.currentPage = currentPage;
+        this.currentPage = currentPage;
         console.log(`当前页: ${val}`);
       },
 

@@ -227,6 +227,11 @@
           });
       },
 
+      handleCurrentChange(currentPage) {
+        this.currentPage = currentPage;
+        console.log(`当前页: ${val}`);
+      },
+
       message(text, type) {
         this.$message({
           message: text,

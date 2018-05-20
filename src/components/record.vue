@@ -100,6 +100,11 @@
           });
       },
 
+      handleCurrentChange(currentPage) {
+        this.currentPage = currentPage;
+        console.log(`当前页: ${val}`);
+      },
+
       errorNotice(val) {
         this.$notify.error({
           title: '错误',

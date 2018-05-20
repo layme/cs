@@ -28,7 +28,7 @@ export default new Router({
         { path: '/output', component: output},
         { path: '/registry', component: registry},
         { path: '/record', component: record},
-        { path: '/user', component: user},
+        { path: '/user', component: user}
       ]
     }
   ]
